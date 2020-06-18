@@ -1,26 +1,32 @@
-const fsPromise = require('fs').promises;
-const { copy } = require('../index');
+const fsPromises = require('fs').promises;
+const { copy, transform } = require('../index');
 
 describe('copy function', () => {
   beforeAll(() => {
-    return fsPromise.writeFile('./test-file.txt', 'test file over here');
+    return fsPromises.writeFile('./test-file.txt', 'TEST file over here');
   });
 
   afterAll(() => {
     return Promise.all([
-      fsPromise.unlink('./test-file.txt'),
-      fsPromise.unlink('./test-file-copy.txt')
+      fsPromises.unlink('./test-file.txt'),
+      fsPromises.unlink('./test-file-copy.txt')
     ]);
   });
 
   it('copies a file', () => {
     return copy('./test-file.txt', './test-file-copy.txt')
       .then(() => {
-        return fsPromise.readFile('./test-file-copy.txt', { encoding: 'utf8' });
+        return fsPromises.readFile('./test-file-copy.txt', { encoding: 'utf8' });
       })
       .then(copiedFile => {
-        expect(copiedFile).toEqual('test file over here');
+        expect(copiedFile).toEqual('TEST file over here');
       });
   });
 
+  it('transforms a file', () => {
+    return transform('./test-file.txt')
+      .then((transformedFile => {
+        expect(transformedFile).toEqual('EREH REVO ELIF ');
+      }));
+  });
 });

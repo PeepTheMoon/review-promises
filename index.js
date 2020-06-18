@@ -1,46 +1,47 @@
 const fsPromises = require('fs').promises;
 
-// //sets a promise to READ a file
-// const promiseToReadREADME = fsPromises.readFile('./README.md', { encoding: 'utf8' });
+//sets a promise to READ a file
+const promiseToReadREADME = fsPromises.readFile('./README.md', { encoding: 'utf8' });
 
-// promiseToReadREADME
-//   //waits for the promise to resolve, then returns the file contents
-//   //then console.log's the file contents and returns the value
-//   .then(fulfilledPromiseToReadREADME => {
-//     console.log(fulfilledPromiseToReadREADME);
-//   });
-// ////////////////////////////////////////////////
+promiseToReadREADME
+  //waits for the promise to resolve, then returns the file contents
+  //then console.log's the file contents and returns the value
+  .then(fulfilledPromiseToReadREADME => {
+    console.log(fulfilledPromiseToReadREADME);
+  });
+////////////////////////////////////////////////
 
-// // sets a promise to WRITE a file
-// const promiseToWriteFile = fsPromises.writeFile('./theWrittenFile.md', 'Yo, this the written file!');
+// sets a promise to WRITE a file
+const promiseToWriteFile = fsPromises.writeFile('./theWrittenFile.md', 'Yo, this the written file!');
 
-// promiseToWriteFile
-//   //when the promise resolves, console.log the file
-//   .then(file => {
-//     console.log('DONE!');
-//   });
-// ////////////////////////////////////////////////
-// const promiseToRead = fsPromises.readFile('./README.md', { encoding: 'utf8' });
-
-// const promiseToReadAndCopyREADME = Promise.all([
-
-//   promiseToRead
-
-//     //first, reads the file
-//     .then(fulfilledPromiseToRead => {
-//       console.log(fulfilledPromiseToRead);
-//       return fulfilledPromiseToRead;
-//     })
-//     //then takes that file and copies it to another file
-//     .then(fulfilledPromiseToRead => {
-//       const copy = fsPromises.writeFile('./copyREADME.md', fulfilledPromiseToRead);
-//       console.log(copy);
-//       return copy;
-//     })
-//     .then(copy => console.log(copy, 'DONE!'))
-// ]);
+promiseToWriteFile
+  //when the promise resolves, console.log the file
+  .then(file => {
+    console.log('DONE!');
+  });
 
 ////////////////////////////////////////////////
+const promiseToRead = fsPromises.readFile('./README.md', { encoding: 'utf8' });
+
+const promiseToReadAndCopyREADME = Promise.all([
+
+  promiseToRead
+
+    //first, reads the file
+    .then(fulfilledPromiseToRead => {
+      console.log(fulfilledPromiseToRead);
+      return fulfilledPromiseToRead;
+    })
+    //then takes that file and copies it to another file
+    .then(fulfilledPromiseToRead => {
+      const copy = fsPromises.writeFile('./copyREADME.md', fulfilledPromiseToRead);
+      console.log(copy);
+      return copy;
+    })
+    .then(copy => console.log(copy, 'DONE!'))
+]);
+//////////////////////////////////////////////
+
 //A copy function that takes in a source and a destination
 const copy = (src, dest) => {
   //promises to read a file and return it
@@ -51,5 +52,32 @@ const copy = (src, dest) => {
       return fsPromises.writeFile(dest, data);
     });
 };
+//////////////////////////////////////////////
+// const removeCaps = (fileData) => {
+//   /[^A-Z]/;
+//   return fileData;
+// };
 
-module.exports = { copy };
+const transform = (src) => {
+  //reads a file and returns the data
+  return fsPromises.readFile(src, { encoding: 'utf8' })
+    .then(fileData => {
+      // then, takes the data and removes all capital letters
+      return fileData.replace(/[A-Z]/g, '');
+    })
+    
+  //then, takes the fileData, spreads it, and returns it reversed and in all caps
+    .then(fileData => {
+      return fileData.toUpperCase();
+
+    })
+    .then(fileData => {
+      return [...fileData].reverse();
+    })
+    .then(fileData => {
+      return fileData.join('');
+    });
+};
+
+
+module.exports = { copy, transform };
