@@ -21,7 +21,18 @@ const getBenderQuotes = name => {
     }]));
 };
 
+const getRickAndMortyCharacters = req => {
+  return request
+    .get('https://rickandmortyapi.com/api/character/')
+    .then(({ body }) => ([{
+      name: body.name,
+      status: body.status,
+      image: body.image
+    }]));
+};
+
 module.exports = {
   getQuote,
-  getBenderQuotes
+  getBenderQuotes,
+  getRickAndMortyCharacters
 };
