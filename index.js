@@ -9,6 +9,7 @@ promiseToReadREADME
   .then(fulfilledPromiseToReadREADME => {
     console.log(fulfilledPromiseToReadREADME);
   });
+
 ////////////////////////////////////////////////
 
 // sets a promise to WRITE a file
@@ -21,12 +22,11 @@ promiseToWriteFile
   });
 
 ////////////////////////////////////////////////
+
 const promiseToRead = fsPromises.readFile('./README.md', { encoding: 'utf8' });
 
 const promiseToReadAndCopyREADME = Promise.all([
-
   promiseToRead
-
     //first, reads the file
     .then(fulfilledPromiseToRead => {
       console.log(fulfilledPromiseToRead);
@@ -40,6 +40,7 @@ const promiseToReadAndCopyREADME = Promise.all([
     })
     .then(copy => console.log(copy, 'DONE!'))
 ]);
+
 //////////////////////////////////////////////
 
 //A copy function that takes in a source and a destination
@@ -52,11 +53,8 @@ const copy = (src, dest) => {
       return fsPromises.writeFile(dest, data);
     });
 };
+
 //////////////////////////////////////////////
-// const removeCaps = (fileData) => {
-//   /[^A-Z]/;
-//   return fileData;
-// };
 
 const transform = (src) => {
   //reads a file and returns the data
@@ -65,19 +63,18 @@ const transform = (src) => {
       // then, takes the data and removes all capital letters
       return fileData.replace(/[A-Z]/g, '');
     })
-    
-  //then, takes the fileData, spreads it, and returns it reversed and in all caps
+    //then, takes the fileData, spreads it, and returns it in all caps
     .then(fileData => {
       return fileData.toUpperCase();
-
     })
+    //then spreads the string into an array and reverse's it
     .then(fileData => {
       return [...fileData].reverse();
     })
+    //then returns the file data rejoined as a string
     .then(fileData => {
       return fileData.join('');
     });
 };
-
 
 module.exports = { copy, transform };
