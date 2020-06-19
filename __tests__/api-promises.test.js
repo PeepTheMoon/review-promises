@@ -1,7 +1,8 @@
 const { 
   getQuote, 
   getBenderQuotes, 
-  getRickAndMortyCharacters 
+  getRickAndMortyCharacters,
+  getRickAndMortyCharacterOrigins 
 } = require('../api-promises');
 
 describe('api functions', () => {
@@ -51,5 +52,17 @@ describe('api functions', () => {
         }]);
       });
   });
+
+  // it('returns a list of character origins with GET', () => {
+  //   return getRickAndMortyCharacterOrigins('req')
+  //     .then(origin => {
+  //       expect(origin).toEqual([{
+  //         origin: {
+  //           name: origin.name,
+  //           url: origin.url
+  //         }
+  //       }]);
+  //     });
+  // });
 
 });

@@ -31,8 +31,28 @@ const getRickAndMortyCharacters = req => {
     }]));
 };
 
+//get help for implementing this logic
+const getRickAndMortyCharacterOrigins = req => {
+  return Promise.all([
+    getRickAndMortyCharacters()
+      .then(characters => {
+        return characters;
+      })
+      // .then(characters => {
+      //   return characters
+      .get('https://rickandmortyapi.com/api/character/')
+      .then(({ origin }) => ([{
+        origin: {
+          name: origin.name,
+          url: origin.url
+        }
+      }]))
+      // })
+  ]);};
+
 module.exports = {
   getQuote,
   getBenderQuotes,
-  getRickAndMortyCharacters
+  getRickAndMortyCharacters,
+  getRickAndMortyCharacterOrigins
 };
