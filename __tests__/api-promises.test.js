@@ -2,7 +2,7 @@ const {
   getQuote, 
   getBenderQuotes, 
   getRickAndMortyCharacters,
-  getRickAndMortyCharacterOrigins 
+  // getRickAndMortyCharacterOrigins 
 } = require('../api-promises');
 
 describe('api functions', () => {
@@ -55,12 +55,9 @@ describe('api functions', () => {
 
   // it('returns a list of character origins with GET', () => {
   //   return getRickAndMortyCharacterOrigins('req')
-  //     .then(origin => {
-  //       expect(origin).toEqual([{
-  //         origin: {
-  //           name: origin.name,
-  //           url: origin.url
-  //         }
+  //     .then(body => {
+  //       expect(body).toEqual([{
+  //         origin: body.origin
   //       }]);
   //     });
   // });
