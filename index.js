@@ -52,6 +52,7 @@ const copy = (src, dest) => {
       //and returns a promise to write a new file with the first file's data
       return fsPromises.writeFile(dest, data);
     });
+  //data is the fulfilled value.  in the test, there is a .then happening AFTER this code block because it needs to read the file again to check that the data is the same.  You don't need to utf8 encode here because it doesn't need to be human readable.
 };
 
 //////////////////////////////////////////////
